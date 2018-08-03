@@ -29,6 +29,34 @@ async function resetIndex () {
     await client.indices.delete({ index })
   }
   await client.indices.create({ index })
+  await putListingMapping()
 }
 
+async function putListingMapping () {
+  const schema = {
+    id: { type: 'double' },
+    unitName: { type: 'text' },
+    unitImage: { type: 'text' },
+    hostId: { type: 'double' },
+    isSuprhost: { type: 'boolean' },
+    unitAddress: { type: 'text' },
+    neighbourhood_cleansed: { type: 'text' },
+    city: { type: 'text' },
+    state: { type: 'text' },
+    country_code: { type: 'text' },
+    property_type: { type: 'text' },
+    room_type: { type: 'text' },
+    beds: { type: 'integer' },
+    unitPrice: { type: 'text' },
+    priceModifier: { type: 'text' },
+    numberOfReviews: { type: 'integer' },
+    reviewScoresRating: { type: 'integer' },
+    freeCancellation: { type: 'boolean' }
+  }
 
+  return client.indices.putMapping({ index, type, body: { properties: schema } })
+}
+
+module.exports = {
+  client, index, type, checkConnection, resetIndex
+}
