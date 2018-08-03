@@ -1,16 +1,28 @@
 const express = require('express');
 
 const Listings = require('../data/mockedDataSearch');
-
+const search = require('./search');
 const app = express();
 const PORT = 3001;
 
-app.get('/api/listing/:location', (req, res) => {
-  const queryString = req.params.location.toLowerCase();
-  const results = Listings.filter(listing =>
-    listing.unitAddress.toLowerCase().includes(decodeURI(queryString)));
-  res.status(200).send(results);
-});
+// app.get('/api/listing/:location', (req, res) => {
+//   const queryString = req.params.location.toLowerCase();
+//   const results = Listings.filter(listing =>
+//     listing.unitAddress.toLowerCase().includes(decodeURI(queryString)));
+//   res.status(200).send(results);
+// });
+
+const asyncMiddleware = fn =>
+  (req, res, next) => {
+    Promise.resolve(fn(req, res, next))
+      .catch(next);
+  };
+
+app.get('/api/listing/:location', asyncMiddleware(async (req, res, next) => {
+    const term = req.params;
+    const results =  await search.queryTerm(term);
+    res.json(results.hits);
+}));
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
