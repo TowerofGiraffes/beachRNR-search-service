@@ -24,3 +24,11 @@ async function checkConnection () {
 
 // checkConnection()
 
+async function resetIndex () {
+  if (await client.indices.exists({ index })) {
+    await client.indices.delete({ index })
+  }
+  await client.indices.create({ index })
+}
+
+
