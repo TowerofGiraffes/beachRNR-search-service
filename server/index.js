@@ -21,7 +21,8 @@ const asyncMiddleware = fn =>
 app.get('/api/listing/:location', asyncMiddleware(async (req, res, next) => {
     const term = req.params;
     const results =  await search.queryTerm(term);
-    res.json(results.hits);
+    const data = await results.hits.hits.map(result => result._source);
+    res.json(data);
 }));
 
 app.listen(PORT, () => {
