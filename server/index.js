@@ -1,6 +1,6 @@
 const express = require('express');
 
-const Listings = require('../data/mockedDataSearch');
+const Listings = require('../data/dataGenerator');
 const search = require('./search');
 const app = express();
 const PORT = 3001;

@@ -1,5 +1,5 @@
 const esConnection = require('./connection');
-const listings = require('../data/mockedDataSearch');
+const listings = require('../data/dataGenerator');
 
 async function insertListingData(data) {
   let bulkOps = [];
