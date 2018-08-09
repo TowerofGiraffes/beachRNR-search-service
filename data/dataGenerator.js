@@ -4,7 +4,7 @@ const cityWithState = ['New York, NY', 'New Jersey, NJ', 'San Francisco, CA',
   'Chicago, IL', 'Seattle, WA', 'Boston, MA', 'Los Angeles, CA'];
 
 const listings = [];
-for (let i = 2912000; i < 2912100; i += 1) {
+for (let i = 2912000; i < 3012100; i += 1) {
   const randomCityWithState = cityWithState[Math.floor(Math.random() * cityWithState.length)];
   const listing = {
     id: i,
