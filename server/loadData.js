@@ -1,8 +1,8 @@
 const esConnection = require('./connection');
 const listings = require('../data/dataGenerator');
-
 const totalNumberOfRecords = 10000000
 let startIndex = 2912000
+
 let endIndex = startIndex + totalNumberOfRecords;
 
 async function insertListingData(data) {
@@ -19,6 +19,7 @@ async function insertListingData(data) {
       // console.log(`Indexed listings ${i - 499} - ${i}`);
     }
   }
+
   await esConnection.client.bulk({ body: bulkOps });
   // console.log(`Indexed data ${data.length - (bulkOps.length / 2)} - ${data.length}\n\n\n`);
 }
@@ -29,9 +30,10 @@ async function indexData() {
     await esConnection.checkConnection();
     let input = listings.generateData(startIndex);
     startIndex += input.length;
-    // console.log('startIndex', startIndex)
+    console.log('🔥startIndex', startIndex)
     await insertListingData(input);
   }
 }
 
 indexData();
+
