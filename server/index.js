@@ -18,13 +18,13 @@ const asyncMiddleware = fn =>
       .catch(next);
   };
 
-app.get('/api/listing/:location', asyncMiddleware(async (req, res, next) => {
+  app.get('/api/listing/:location', asyncMiddleware(async (req, res, next) => {
     const term = req.params;
     const results =  await search.queryTerm(term);
     const data = await results.hits.hits.map(result => result._source);
-    res.json(data);
-}));
+    res.json({timeTaken: results.took, count:results.hits.total, data: data});
+    }
+  )
+);
 
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));
