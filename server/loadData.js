@@ -30,7 +30,7 @@ async function indexData() {
     await esConnection.checkConnection();
     let input = listings.generateData(startIndex);
     startIndex += input.length;
-    console.log('🔥startIndex', startIndex)
+    // console.log('🔥startIndex', startIndex)
     await insertListingData(input);
   }
 }
