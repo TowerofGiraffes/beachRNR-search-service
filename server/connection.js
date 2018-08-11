@@ -1,11 +1,16 @@
-const elasticsearch = require('elasticsearch')
+const elasticsearch = require('elasticsearch');
+require('dotenv').config();
 
-// Core ES variables for this project
-const index = 'listings'
-const type = 'homes'
-const port = 9200
-const host = process.env.ES_HOST || 'localhost'
-const client = new elasticsearch.Client({ host: { host, port } })
+// Core ES variables
+const index = 'listings';
+const type = 'homes';
+
+const port = 9200;
+const host = process.env.ES_HOST || 'localhost';
+
+let client = new elasticsearch.Client({ host: host });
+if (!process.env.ES_HOST) client = new elasticsearch.Client({ host: { host, port }});
+
 
 /** Check the ES connection status */
 async function checkConnection () {
