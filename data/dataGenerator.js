@@ -1,7 +1,5 @@
 const faker = require('faker');
-
-const cityWithState = ['New York, NY', 'New Jersey, NJ', 'San Francisco, CA',
-  'Chicago, IL', 'Seattle, WA', 'Boston, MA', 'Los Angeles, CA'];
+const cityWithState = require('./cityAndStateList');
 
 const generateData = (index) => {
   const listings = [];
