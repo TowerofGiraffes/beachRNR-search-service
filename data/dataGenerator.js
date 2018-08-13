@@ -1,13 +1,14 @@
 const faker = require('faker');
 const cityWithState = require('./cityAndStateList');
+const unitNames = require('./unitNames');
 
 const generateData = (index) => {
   const listings = [];
   for (let i = index; i < index + 10000; i += 1) {
-    const randomCityWithState = cityWithState[Math.floor(Math.random() * cityWithState.length)];
+    const randomCityWithState = faker.random.arrayElement(cityWithState);
     const listing = {
       id: i,
-      unitName: `${faker.address.cityPrefix()} ${faker.address.citySuffix()} ${faker.address.streetSuffix()}`,
+      unitName: faker.random.arrayElement(unitNames),
       unitImage: `https://s3.us-east-2.amazonaws.com/bnbsearch/images/${faker.random.number({ min: 1, max: 35 })}.jpg`,
       hostId: faker.random.number(),
       hostName: faker.name.firstName(),
@@ -30,4 +31,3 @@ const generateData = (index) => {
 };
 
 module.exports = { generateData };
-
