@@ -1,17 +1,18 @@
 const { client, index, type } = require('./connection');
 
 module.exports = {
-  // Query ES index for the provided term
+  /** Query ES index for the provided term */
   queryTerm(term, offset = 0) {
-    console.log('searching elastic:', term.location);
+    // console.log('searching elastic:', term.location);
     const body = {
       from: offset,
+      // size: 20,
       query: {
         match: {
           city: {
             query: term.location,
             operator: 'AND',
-            // fuzziness: 'AUTO',
+            fuzziness: 'auto',
             minimum_should_match: '20%'
           }
         }

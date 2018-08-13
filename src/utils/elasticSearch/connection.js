@@ -1,43 +1,33 @@
 const elasticsearch = require('elasticsearch');
 require('dotenv').config();
 
-// Core ES variables
+// Core ES variables for this project
 const index = 'listings';
 const type = 'homes';
-
 const port = 9200;
 const host = process.env.ES_HOST || 'localhost';
 
-let client = new elasticsearch.Client({ host: host });
-if (!process.env.ES_HOST) client = new elasticsearch.Client({ host: { host, port }});
-
+let client = new elasticsearch.Client({ host });
+if (!process.env.ES_HOST) client = new elasticsearch.Client({ host: { host, port } });
 
 /** Check the ES connection status */
-async function checkConnection () {
-  let isConnected = false
+const checkConnection = async (err) => {
+  let isConnected = false;
   while (!isConnected) {
-    console.log('Connecting to ES')
-    try {
-      const health = await client.cluster.health({})
-      console.log(health)
-      isConnected = true
-    } catch (err) {
-      console.log('Connection Failed, Retrying...', err)
+    // console.log('Connecting to ES');
+    await client.cluster.health({});
+    // const health = await client.cluster.health({});
+    // console.log(health);
+    isConnected = true;
+    if (err) {
+      throw (err);
     }
   }
-}
+};
 
 // checkConnection()
 
-async function resetIndex () {
-  if (await client.indices.exists({ index })) {
-    await client.indices.delete({ index })
-  }
-  await client.indices.create({ index })
-  await putListingMapping()
-}
-
-async function putListingMapping () {
+const putListingMapping = async () => {
   const schema = {
     id: { type: 'double' },
     unitName: { type: 'text' },
@@ -57,11 +47,19 @@ async function putListingMapping () {
     numberOfReviews: { type: 'integer' },
     reviewScoresRating: { type: 'integer' },
     freeCancellation: { type: 'boolean' }
-  }
+  };
 
-  return client.indices.putMapping({ index, type, body: { properties: schema } })
-}
+  return client.indices.putMapping({ index, type, body: { properties: schema } });
+};
+
+const resetIndex = async () => {
+  if (await client.indices.exists({ index })) {
+    await client.indices.delete({ index });
+  }
+  await client.indices.create({ index });
+  await putListingMapping();
+};
 
 module.exports = {
   client, index, type, checkConnection, resetIndex
-}
+};
