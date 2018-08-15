@@ -6,7 +6,7 @@ module.exports = {
     // console.log('searching elastic:', term.location);
     const body = {
       from: offset,
-      // size: 20,
+      size: 100,
       query: {
         match: {
           city: {
