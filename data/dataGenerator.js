@@ -9,7 +9,7 @@ const generateData = (index) => {
     const listing = {
       id: i,
       unitName: faker.random.arrayElement(unitNames),
-      unitImage: `https://s3.us-east-2.amazonaws.com/bnbsearch/images/${faker.random.number({ min: 1, max: 35 })}.jpg`,
+      unitImage: `https://s3.us-east-2.amazonaws.com/bnbsearch/images/${faker.random.number({ min: 1, max: 100 })}.jpg`,
       hostId: faker.random.number(),
       hostName: faker.name.firstName(),
       isSuprhost: faker.random.boolean(),
