@@ -1,21 +1,22 @@
 /* eslint-env jest */
 const httpMocks = require('node-mocks-http');
 import {formatData, search } from '../search';
+import { EventEmitter } from 'events';
 
 const searchQuery = require('../../utils/elasticSearch/searchQuery');
 jest.mock('../../utils/elasticSearch/searchQuery');
 
-const req = httpMocks.createRequest({params: {location: 'boston' }});
-var res = httpMocks.createResponse();
+const req = httpMocks.createRequest({
+  params: {location: 'boston' }
+});
+const res = httpMocks.createResponse({
+  eventEmitter: EventEmitter
+});
 
 searchQuery.queryTerm.mockImplementation((term) => {
   const jsonData = require(`../__mockData__/${term.location}.json`);
   return jsonData;
 });
-
-res.json = data => data;
-// res._getData = (data) => data;
-
 
 describe('get formatted data', () => {
   it('should return formatted data', () => {
@@ -32,16 +33,22 @@ describe('get formatted data', () => {
   });
 });
 
-xdescribe('get search result', () => {
-  xit('should load search result', async () => {
-    // const searchSpy = jest.spyOn(search, 'search');
-    const output = search(req, res);
-    // expect(searchSpy).toHaveBeenCalled();
-    let result = res
-    // console.dir(result, {depth: null, color: true});
-    console.log('output~~~', output);
+describe('get search result', () => {
+  it('should return search result', async () => {
+    let result = {};
+    res.on('end', () => {
+      result = res._getData();
+      done();
+    });
+    await search(req, res);
+
     expect(res.statusCode).toBe(200);
-    // expect(output).toBeDefined();
+    expect(result.timeTaken).toEqual(10);
+    expect(result.count).toEqual(1);
+    expect(result.data[0].id).toEqual(2912296);
+    expect(result.data[0].unitName).toEqual('South End Brownstone 1bd/1ba');
+    expect(result.data[0].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/4.jpg');
+    expect(result.data[0].city).toEqual('Boston');
   });
 });
 
