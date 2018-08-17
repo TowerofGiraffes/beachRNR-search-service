@@ -9,7 +9,8 @@
     "restart": "pm2 startOrRestart ecosystem.config.js",
     "deploy": "pm2 deploy ecosystem.config.js production",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:coverall": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "babel-jest": "^23.4.2",
     "babel-preset-env": "^1.7.0",
+    "coveralls": "^3.0.2",
     "events": "^3.0.0",
     "jest": "^23.5.0",
     "node-mocks-http": "^1.7.0",
