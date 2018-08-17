@@ -41,10 +41,7 @@ describe('get search result', () => {
   beforeEach(() => {
     res = response();
     result = {};
-    res.on('end', () => {
-      result = res._getData();
-      done();
-    });
+    res.on('end', () => { result = res._getData(); });
   });
 
   it('should return search result for a valid location', async () => {
