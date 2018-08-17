@@ -1,46 +1,76 @@
 {
-  "took": 10,
-  "timed_out": false,
-  "_shards": {
-      "total": 5,
-      "successful": 5,
-      "skipped": 0,
-      "failed": 0
+  "took":10,
+  "timed_out":false,
+  "_shards":{
+     "total":5,
+     "successful":5,
+     "skipped":0,
+     "failed":0
   },
-  "hits": {
-      "total": 1,
-      "max_score": 5.8553658,
-      "hits": [
-          {
-              "_index": "listings",
-              "_type": "homes",
-              "_id": "2912296",
-              "_score": 5.8553658,
-              "_source": {
-                  "id": 2912296,
-                  "unitName": "South End Brownstone 1bd/1ba",
-                  "unitImage": "https://s3.us-east-2.amazonaws.com/bnbsearch/images/4.jpg",
-                  "hostId": 65511,
-                  "hostName": "Providenci",
-                  "isSuprhost": true,
-                  "unitAddress": "704 Conor Port, Boston, MA 62103, United States",
-                  "city": "Boston",
-                  "country_code": "US",
-                  "property_type": "Townhouse",
-                  "room_type": "Entire home/apt",
-                  "beds": 2,
-                  "unitPrice": "$228",
-                  "priceModifier": "per night",
-                  "numberOfReviews": 690,
-                  "reviewScoresRating": 4.5,
-                  "freeCancellation": true
-              },
-              "highlight": {
-                  "city": [
-                      "<em>Boston</em>"
-                  ]
-              }
-          }
-      ]
+  "hits":{
+     "total":2,
+     "max_score":5.8553658,
+     "hits":[
+        {
+           "_index":"listings",
+           "_type":"homes",
+           "_id":"2912296",
+           "_score":5.8553658,
+           "_source":{
+              "id":2912296,
+              "unitName":"South End Brownstone 1bd/1ba",
+              "unitImage":"https://s3.us-east-2.amazonaws.com/bnbsearch/images/4.jpg",
+              "hostId":65511,
+              "hostName":"Providenci",
+              "isSuprhost":true,
+              "unitAddress":"704 Conor Port, Boston, MA 62103, United States",
+              "city":"Boston",
+              "country_code":"US",
+              "property_type":"Townhouse",
+              "room_type":"Entire home/apt",
+              "beds":2,
+              "unitPrice":"$228",
+              "priceModifier":"per night",
+              "numberOfReviews":690,
+              "reviewScoresRating":4.5,
+              "freeCancellation":true
+           },
+           "highlight":{
+              "city":[
+                 "<em>Boston</em>"
+              ]
+           }
+        },
+        {
+           "_index":"listings",
+           "_type":"homes",
+           "_id":"2915602",
+           "_score":2.289254,
+           "_source":{
+              "id":2915602,
+              "unitName":"South mouth Estates",
+              "unitImage":"https://s3.us-east-2.amazonaws.com/bnbsearch/images/23.jpg",
+              "hostId":61663,
+              "hostName":"Izaiah",
+              "isSuprhost":true,
+              "unitAddress":"3434 Herman Squares, Boston, MA 27223, United States",
+              "city":"Boston",
+              "country_code":"US",
+              "property_type":"Apartment",
+              "room_type":"Private room",
+              "beds":1,
+              "unitPrice":"$427",
+              "priceModifier":"per night",
+              "numberOfReviews":1224,
+              "reviewScoresRating":4,
+              "freeCancellation":true
+           },
+           "highlight":{
+              "city":[
+                 "<em>Boston</em>"
+              ]
+           }
+        }
+     ]
   }
 }
