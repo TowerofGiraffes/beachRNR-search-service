@@ -1,15 +1,16 @@
 /* eslint-env jest */
 const httpMocks = require('node-mocks-http');
-import {formatData, search } from '../search';
+import { formatData, search } from '../search';
 import { EventEmitter } from 'events';
 
 const searchQuery = require('../../utils/elasticSearch/searchQuery');
 jest.mock('../../utils/elasticSearch/searchQuery');
 
-const req = httpMocks.createRequest({
-  params: {location: 'boston' }
+const request = location => httpMocks.createRequest({
+  params: {location: location }
 });
-const res = httpMocks.createResponse({
+
+const response = () => httpMocks.createResponse({
   eventEmitter: EventEmitter
 });
 
@@ -33,14 +34,21 @@ describe('get formatted data', () => {
   });
 });
 
+let result;
+let res;
+
 describe('get search result', () => {
-  it('should return search result', async () => {
-    let result = {};
+  beforeEach(() => {
+    res = response();
+    result = {};
     res.on('end', () => {
       result = res._getData();
       done();
     });
-    await search(req, res);
+  });
+
+  it('should return search result for a valid location', async () => {
+    await search(request('boston'), res);
 
     expect(res.statusCode).toBe(200);
     expect(result.timeTaken).toEqual(10);
@@ -50,5 +58,13 @@ describe('get search result', () => {
     expect(result.data[0].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/4.jpg');
     expect(result.data[0].city).toEqual('Boston');
   });
-});
 
+  it('should return empty dataset for invalid location', async () => {
+    await search(request('invalid_location'), res);
+
+    expect(res.statusCode).toBe(200);
+    expect(result.timeTaken).toEqual(6);
+    expect(result.count).toEqual(0);
+    expect(result.data.length).toEqual(0);
+  });
+});
