@@ -26,7 +26,7 @@ describe('get formatted data', () => {
 
     expect(output).toBeDefined();
     expect(output.timeTaken).toEqual(10);
-    expect(output.count).toEqual(1);
+    expect(output.count).toEqual(2);
     expect(output.data[0].id).toEqual(2912296);
     expect(output.data[0].unitName).toEqual('South End Brownstone 1bd/1ba');
     expect(output.data[0].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/4.jpg');
@@ -49,11 +49,15 @@ describe('get search result', () => {
 
     expect(res.statusCode).toBe(200);
     expect(result.timeTaken).toEqual(10);
-    expect(result.count).toEqual(1);
+    expect(result.count).toEqual(2);
     expect(result.data[0].id).toEqual(2912296);
     expect(result.data[0].unitName).toEqual('South End Brownstone 1bd/1ba');
     expect(result.data[0].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/4.jpg');
     expect(result.data[0].city).toEqual('Boston');
+    expect(result.data[1].id).toEqual(2915602);
+    expect(result.data[1].unitName).toEqual('South mouth Estates');
+    expect(result.data[1].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/23.jpg');
+    expect(result.data[1].city).toEqual('Boston');
   });
 
   it('should return empty dataset for invalid location', async () => {
