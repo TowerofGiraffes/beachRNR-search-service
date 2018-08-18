@@ -13,7 +13,7 @@ module.exports = {
             query: term.location,
             operator: 'AND',
             fuzziness: 'auto',
-            minimum_should_match: '20%'
+            minimum_should_match: '70%'
           }
         }
       },
