@@ -29,6 +29,7 @@
     "newrelic": "^4.8.0"
   },
   "devDependencies": {
+    "artillery": "^1.6.0-22",
     "babel-jest": "^23.4.2",
     "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
