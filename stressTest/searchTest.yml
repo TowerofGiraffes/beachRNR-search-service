@@ -1,0 +1,45 @@
+config:
+  environments:
+    staging:
+      target: ${url}
+      phases:
+        - duration: 30
+          arrivalRate: 20
+          name: 'Warm up'
+        - duration: 15
+          arrivalRate: 100
+          name: 'Sustained light load'
+        - duration: 15
+          arrivalRate: 100
+          rampTo: 200
+          name: 'Going to max'
+        - duration: 30
+          arrivalRate: 200
+          name: 'Sustained max'
+    develop:
+      target: 'http://localhost:3001'
+      phases:
+        - duration: 30
+          arrivalRate: 20
+          name: 'Warm up'
+        - duration: 15
+          arrivalRate: 100
+          name: 'Sustained light load'
+        - duration: 15
+          arrivalRate: 100
+          rampTo: 200
+          name: 'Going to max'
+        - duration: 30
+          arrivalRate: 200
+          name: 'Sustained max'
+scenarios:
+  - flow:
+    # - log: "Current environment is set to: {{ $environment }}"
+    - get:
+        url: '/api/listing/boston'
+
+
+
+# run command: artillery run <fileName>
+
+# set target server (overriding the one specified in the test file) : -t, --target <string>
