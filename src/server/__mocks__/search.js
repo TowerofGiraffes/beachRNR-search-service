@@ -7,7 +7,7 @@ const search = ((location) => {
     console.log('called search');
     process.nextTick(
       () => responseData.data.length ? resolve(responseData) : reject({
-        error: location + ' not found.',
+        error: location + ' not found.'
       })
     );
   });

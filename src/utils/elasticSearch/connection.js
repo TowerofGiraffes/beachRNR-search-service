@@ -8,7 +8,7 @@ const port = 9200;
 const host = process.env.ES_HOST || 'localhost';
 
 let client = new elasticsearch.Client({ host });
-if (!process.env.ES_HOST) client = new elasticsearch.Client({ host: { host, port } });
+if (!process.env.ES_HOST) { client = new elasticsearch.Client({ host: { host, port } }); }
 
 /** Check the ES connection status */
 const checkConnection = async (err) => {

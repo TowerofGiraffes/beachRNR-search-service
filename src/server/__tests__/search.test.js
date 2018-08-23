@@ -21,7 +21,7 @@ searchQuery.queryTerm.mockImplementation((term) => {
 
 describe('get formatted data', () => {
   it('should return formatted data', () => {
-    const jsonData = require(`../__mockData__/boston.json`);
+    const jsonData = require('../__mockData__/boston.json');
     const output = formatData(jsonData);
 
     expect(output).toBeDefined();
@@ -34,7 +34,7 @@ describe('get formatted data', () => {
   });
 });
 
-let result;
+let result = {};
 let res;
 
 describe('get search result', () => {

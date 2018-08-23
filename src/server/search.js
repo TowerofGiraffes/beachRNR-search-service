@@ -7,8 +7,8 @@ const asyncMiddleware = fn => (req, res, next) => {
 
 const formatData = input => {
   const data = input.hits.hits.map(result => result._source);
-  return { timeTaken: input.took, count: input.hits.total, data }
-}
+  return { timeTaken: input.took, count: input.hits.total, data };
+};
 
 const search = asyncMiddleware(async (req, res) => {
   const term = req.params;

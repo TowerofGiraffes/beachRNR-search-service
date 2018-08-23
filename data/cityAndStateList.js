@@ -762,5 +762,5 @@ module.exports = [
   'Mabelvale, AR',
   'Maben, MS',
   'Maben, WV',
-  'Mabie, WV',
+  'Mabie, WV'
 ];

@@ -12,7 +12,7 @@ const insertListingData = async (data) => {
   for (let i = 0; i < data.length; i += 1) {
     bulkOps.push(
       {
-        index: { _index: esConnection.index, _type: esConnection.type, _id: data[i].id },
+        index: { _index: esConnection.index, _type: esConnection.type, _id: data[i].id }
       },
       data[i],
     );
