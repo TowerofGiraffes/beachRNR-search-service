@@ -5,6 +5,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 6,
     sourceType: "module",
+    ecmaVersion: 2017,
     ecmaFeatures: {
       'jsx': true
     }
@@ -34,6 +35,7 @@ module.exports = {
     'one-var': [1, { 'uninitialized': 'always', 'initialized': 'never' }],
     /* Minuta */
     'comma-style': [2, 'last'],
-    'quotes': [1, 'single']
+    'quotes': [1, 'single'],
+    'comma-dangle': [2, 'never']
   }
 };
