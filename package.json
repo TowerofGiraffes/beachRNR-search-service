@@ -8,6 +8,7 @@
     "load-data": "node data/loadData.js",
     "restart": "pm2 startOrRestart ecosystem.config.js",
     "deploy": "pm2 deploy ecosystem.config.js production",
+    "lint": "eslint *.js data src",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverall": "node_modules/.bin/jest --coverage && cat ./tests/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
