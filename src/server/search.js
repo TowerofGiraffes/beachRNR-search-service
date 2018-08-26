@@ -1,5 +1,5 @@
 const searchQuery = require('../utils/elasticSearch/searchQuery');
-const redis = require('../utils/redis/index');
+const redis = require('../utils/redis/redis');
 
 const asyncMiddleware = fn => (req, res, next) => {
   Promise.resolve(fn(req, res, next))
