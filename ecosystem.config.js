@@ -6,7 +6,7 @@ module.exports = {
   deploy: {
     production: {
       user: 'ubuntu',
-      host: 'ec2-13-57-228-175.us-west-1.compute.amazonaws.com',
+      host: 'ec2-54-183-253-222.us-west-1.compute.amazonaws.com',
       key: '~/.ssh/search-service.pem',
       ref: 'origin/master',
       repo: 'git@github.com:TowerofGiraffes/beachRNR-search-service.git',
