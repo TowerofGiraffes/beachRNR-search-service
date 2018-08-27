@@ -12,10 +12,12 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverall": "node_modules/.bin/jest --coverage && cat ./tests/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test:codecov": "jest && codecov",
     "validate": "run-p lint test"
   },
   "jest": {
-    "coverageDirectory": "<rootDir>/tests/coverage"
+    "coverageDirectory": "<rootDir>/tests/coverage",
+    "collectCoverage": true
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,7 @@
     "artillery": "^1.6.0-22",
     "babel-jest": "^23.4.2",
     "babel-preset-env": "^1.7.0",
+    "codecov": "^3.0.4",
     "coveralls": "^3.0.2",
     "events": "^3.0.0",
     "jest": "^23.5.0",
