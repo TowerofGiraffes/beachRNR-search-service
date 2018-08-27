@@ -5,12 +5,19 @@ import { EventEmitter } from 'events';
 
 const searchQuery = require('../../utils/elasticSearch/searchQuery');
 jest.mock('../../utils/elasticSearch/searchQuery');
-// const redis = require('../../utils/redis/redis');
-// jest.mock('../../utils/redis/redis');
+const redisSeach = require('../../utils/redis/redis');
+jest.mock('../../utils/redis/redis');
 
 import redis from 'redis';
 import redis_mock from 'redis-mock';
 jest.spyOn(redis, 'createClient').mockImplementation(redis_mock.createClient);
+jest.spyOn(redisSeach, 'closeInstance').mockImplementation(redis_mock.end);
+jest.spyOn(redisSeach, 'getSearchResults').mockImplementation(()=> {
+  return undefined;
+});
+jest.spyOn(redisSeach, 'writeSearchToCache').mockImplementation(()=> {
+  return true;
+});
 
 const request = location => httpMocks.createRequest({
   params: {location: location }
@@ -27,6 +34,9 @@ searchQuery.queryTerm.mockImplementation((term) => {
 
 
 describe('get formatted data', () => {
+  afterEach(() => {
+    redisSeach.closeInstance();
+  });
   it('should return formatted data', () => {
     const jsonData = require('../__mockData__/boston.json');
     const output = formatData(jsonData);

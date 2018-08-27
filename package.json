@@ -11,7 +11,7 @@
     "lint": "eslint *.js data src",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverall": "node_modules/.bin/jest --coverage && cat ./tests/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test:coverall": "node_modules/.bin/jest --coverage --forceExit&& cat ./tests/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "validate": "run-p lint test"
   },
   "jest": {
