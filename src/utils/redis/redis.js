@@ -5,24 +5,26 @@ bluebird.promisifyAll(redis.Multi.prototype);
 
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 // const client = redis.createClient({host: 'redis'});
-const client = redis.createClient();
+// let client = redis.createClient();
+let client;
 
 const writeSearchToCache = async (query, result) => {
+  client = redis.createClient();
   let filteredResult = result.filter(e => e.city.toLowerCase() === query.toLowerCase());
   await client.setAsync(query, JSON.stringify(filteredResult));
+  client.quit();
 };
 
 const getSearchResults = async (query) => {
+  client = redis.createClient();
   let value = await client.getAsync(query);
+  client.quit();
   return JSON.parse(value);
 };
 
 // writeSearchToCache(data.listings, 'seattle');
 // getSearchResults('seattle');
-const closeInstance = async (callback) => {
-  await client.quit(callback);
-};
 
 module.exports.getSearchResults = getSearchResults;
 module.exports.writeSearchToCache = writeSearchToCache;
-module.exports.closeInstance = closeInstance;
+
