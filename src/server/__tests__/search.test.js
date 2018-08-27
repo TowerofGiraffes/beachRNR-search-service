@@ -8,6 +8,10 @@ jest.mock('../../utils/elasticSearch/searchQuery');
 // const redis = require('../../utils/redis/redis');
 // jest.mock('../../utils/redis/redis');
 
+import redis from 'redis';
+import redis_mock from 'redis-mock';
+jest.spyOn(redis, 'createClient').mockImplementation(redis_mock.createClient);
+
 const request = location => httpMocks.createRequest({
   params: {location: location }
 });
@@ -20,6 +24,7 @@ searchQuery.queryTerm.mockImplementation((term) => {
   const jsonData = require(`../__mockData__/${term.location}.json`);
   return jsonData;
 });
+
 
 describe('get formatted data', () => {
   it('should return formatted data', () => {
@@ -39,14 +44,14 @@ describe('get formatted data', () => {
 let result = {};
 let res;
 
-describe('get search result', () => {
+xdescribe('get search result', () => {
   beforeEach(() => {
     res = response();
     result = {};
     res.on('end', () => { result = res._getData(); });
   });
 
-  xit('should return search result for a valid location', async () => {
+  it('should return search result for a valid location', async () => {
     await search(request('boston'), res);
 
     expect(res.statusCode).toBe(200);
@@ -62,7 +67,7 @@ describe('get search result', () => {
     expect(result.data[1].city).toEqual('Boston');
   });
 
-  xit('should return empty dataset for invalid location', async () => {
+  it('should return empty dataset for invalid location', async () => {
     await search(request('invalid_location'), res);
 
     expect(res.statusCode).toBe(200);
