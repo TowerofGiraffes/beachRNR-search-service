@@ -1,5 +1,6 @@
 const searchQuery = require('../utils/elasticSearch/searchQuery');
 const redis = require('../utils/redis/redis');
+const {performance} = require('perf_hooks');
 
 const asyncMiddleware = fn => (req, res, next) => {
   Promise.resolve(fn(req, res, next))
@@ -16,15 +17,17 @@ const search = asyncMiddleware(async (req, res) => {
   console.log(term.location);
   let formattedData = [];
   let results;
+  let t0 = performance.now();
   results = await redis.getSearchResults(term.location);
+  let t1 = performance.now();
   if (results) {
-    formattedData = { timeTaken: 5, count: results.length, data: results };
+    formattedData = { timeTaken: (t1 - t0).toFixed(2), count: results.total, data: results.data };
   } else {
     results = await searchQuery.queryTerm(term);
     formattedData = formatData(results);
   }
   res.status(200).send(formattedData);
-  redis.writeSearchToCache(term.location, formattedData.data);
+  redis.writeSearchToCache(term.location, formattedData);
 });
 
 module.exports = {

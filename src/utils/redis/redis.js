@@ -10,8 +10,12 @@ let client;
 
 const writeSearchToCache = async (query, result) => {
   client = redis.createClient();
-  let filteredResult = result.filter(e => e.city.toLowerCase() === query.toLowerCase());
-  await client.setAsync(query, JSON.stringify(filteredResult));
+
+  let filteredResult = result.data.filter(e => e.city.toLowerCase() === query.toLowerCase());
+  if (filteredResult.length) {
+    await client.setAsync(query, JSON.stringify({ total: result.count, data: filteredResult}));
+  }
+  // await client.setAsync(query, JSON.stringify(filteredResult));
   client.quit();
 };
 
