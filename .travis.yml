@@ -6,8 +6,7 @@ services:
   - redis-server
 script:
   - npm test
+after_success:
   - npm run test:codecov
   - codecov
-after_success:
-  - npm run test:coverall
 
