@@ -4,7 +4,33 @@ install:
   - npm install
 services:
   - redis-server
+cache:
+  directories:
+    - node_modules
+deploy:
+- provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  local_dir: dpl_cd_upload
+  skip_cleanup: true
+  on: &2
+    repo: TowerofGiraffes/beachRNR-search-service
+  bucket: searchservice
+  region: us-west-1
+- provider: codedeploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: searchservice
+  key: latest.zip
+  bundle_type: zip
+  application: beachrnr-search-service
+  deployment_group: search
+  region: us-west-1
+  on: *2
 script:
+  - zip -r latest *
+  - mkdir -p dpl_cd_upload
+  - mv latest.zip dpl_cd_upload/latest.zip
   - npm test
 after_success:
   - npm run test:codecov
