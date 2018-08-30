@@ -2,8 +2,6 @@ language: node_js
 node_js: '8'
 install:
   - npm install
-services:
-  - redis-server
 cache:
   directories:
     - node_modules
@@ -28,7 +26,7 @@ deploy:
   region: us-west-1
   on: *2
 script:
-  - zip -r latest *
+  - zip -r latest * >/dev/null
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
   - npm test
