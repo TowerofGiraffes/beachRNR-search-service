@@ -21,3 +21,4 @@ coverage:
         if_not_found: success
   ignore:
     - "src/server/index.js"
+    -"src/utils/elasticSearch/searchQuery.js"
