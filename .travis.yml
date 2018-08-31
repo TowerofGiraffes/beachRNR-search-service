@@ -30,8 +30,7 @@ script:
   - zip -r latest * >/dev/null
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
-  - npm test
-after_success:
   - npm run test:codecov
+after_success:
   - codecov
 
