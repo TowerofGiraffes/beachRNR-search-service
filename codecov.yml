@@ -22,3 +22,4 @@ coverage:
   ignore:
     - "src/server/index.js"
     - "src/utils/elasticSearch/searchQuery.js"
+    - "src/utils/redis/redis.js"
