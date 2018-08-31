@@ -16,7 +16,12 @@
   },
   "jest": {
     "coverageDirectory": "<rootDir>/tests/coverage",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/utils/redis/*.js",
+      "!src/utils/elasticSearch/connection.js"
+    ]
   },
   "repository": {
     "type": "git",
