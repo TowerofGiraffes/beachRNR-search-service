@@ -19,5 +19,3 @@ coverage:
       default:
         enabled: no
         if_not_found: success
-  ignore:
-    - src/utils/redis/*.js
