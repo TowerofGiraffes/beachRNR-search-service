@@ -5,8 +5,7 @@ install:
 services:
   - redis-server
 script:
-  - npm test
-after_success:
   - npm run test:codecov
+after_success:
   - codecov
 

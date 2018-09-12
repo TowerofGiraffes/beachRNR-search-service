@@ -1,4 +1,3 @@
-/* eslint-env jest */
 const httpMocks = require('node-mocks-http');
 import { formatData, search } from '../search';
 import { EventEmitter } from 'events';
@@ -18,6 +17,10 @@ jest.spyOn(redisSearch, 'writeSearchToCache').mockImplementation(()=> {
   return true;
 });
 
+jest.spyOn(redisSearch, 'closeInstance').mockImplementation(()=> {
+  redis_mock.quit;
+});
+
 const request = location => httpMocks.createRequest({
   params: {location: location }
 });
@@ -31,10 +34,11 @@ searchQuery.queryTerm.mockImplementation((term) => {
   return jsonData;
 });
 
-// afterAll(() => redis.closeInstance());
 
 describe('get formatted data', () => {
-  afterAll(() => redisSeach.closeInstance());
+  afterAll(async () => {
+    await redisSearch.closeInstance();
+  });
   it('should return formatted data', () => {
     const jsonData = require('../__mockData__/boston.json');
     const output = formatData(jsonData);
@@ -49,38 +53,38 @@ describe('get formatted data', () => {
   });
 });
 
-let result = {};
-let res;
-
 describe('get search result', () => {
-  beforeEach(() => {
-    res = response();
-    result = {};
-    res.on('end', () => { result = res._getData(); });
+  afterAll(async () => {
+    await redisSearch.closeInstance();
   });
-  // afterAll(() => redisSeach.closeInstance());
   it('should return search result for a valid location', async () => {
-    await search(request('boston'), res);
+    await search(request('boston'), response());
 
-    expect(res.statusCode).toBe(200);
-    // expect(result.timeTaken).toEqual(10);
-    // expect(result.count).toEqual(2);
-    // expect(result.data[0].id).toEqual(2912296);
-    // expect(result.data[0].unitName).toEqual('South End Brownstone 1bd/1ba');
-    // expect(result.data[0].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/4.jpg');
-    // expect(result.data[0].city).toEqual('Boston');
-    // expect(result.data[1].id).toEqual(2915602);
-    // expect(result.data[1].unitName).toEqual('South mouth Estates');
-    // expect(result.data[1].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/23.jpg');
-    // expect(result.data[1].city).toEqual('Boston');
+    response().on('end', () => {
+      let result = response()._getData();
+      expect(response().statusCode).toBe(200);
+      expect(result.timeTaken).toEqual(10);
+      expect(result.count).toEqual(2);
+      expect(result.data[0].id).toEqual(2912296);
+      expect(result.data[0].unitName).toEqual('South End Brownstone 1bd/1ba');
+      expect(result.data[0].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/4.jpg');
+      expect(result.data[0].city).toEqual('Boston');
+      expect(result.data[1].id).toEqual(2915602);
+      expect(result.data[1].unitName).toEqual('South mouth Estates');
+      expect(result.data[1].unitImage).toEqual('https://s3.us-east-2.amazonaws.com/bnbsearch/images/23.jpg');
+      expect(result.data[1].city).toEqual('Boston');
+    });
   });
 
   it('should return empty dataset for invalid location', async () => {
-    await search(request('invalid_location'), res);
+    await search(request('invalid_location'), response());
 
-    expect(res.statusCode).toBe(200);
-    // expect(result.timeTaken).toEqual(6);
-    // expect(result.count).toEqual(0);
-    // expect(result.data.length).toEqual(0);
+    response().on('end', () => {
+      let result = response()._getData();
+      expect(response().statusCode).toBe(200);
+      expect(result.timeTaken).toEqual(6);
+      expect(result.count).toEqual(0);
+      expect(result.data.length).toEqual(0);
+    });
   });
 });

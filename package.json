@@ -36,6 +36,7 @@
   "devDependencies": {
     "artillery": "^1.6.0-22",
     "babel-jest": "^23.4.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "codecov": "^3.0.4",
     "coveralls": "^3.0.2",
