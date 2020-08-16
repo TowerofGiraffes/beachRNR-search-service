@@ -12,6 +12,7 @@ A search microservice for an Airbnb type application
 
 View architecture [here](https://drive.google.com/open?id=1ku8Xu6OlECaoCK40MIVZVnmdn8lvckpU)
 
+
 ## Sequence Diagram
 
 View the Sequence Diagram [here](https://drive.google.com/open?id=1DNc3hpuQFplxmLVRYtW14ZpPWzU6Xn_V)
